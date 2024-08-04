@@ -10,9 +10,9 @@ pub fn build(b: *std.Build) void {
         .optimize = optimize,
     });
 
-    lib.addCSourceFile(.{ .file = b.path("src/math.c") });
-    lib.root_module.addIncludePath(b.path("src"));
-    // b.installArtifact(lib);
+    lib.addCSourceFile(.{ .file = b.path("src/c/math.c") });
+    lib.root_module.addIncludePath(b.path("src/c"));
+    b.installArtifact(lib);
 
     const exe = b.addExecutable(.{
         .name = "zig",
