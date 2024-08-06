@@ -36,7 +36,6 @@ pub fn main() !void {
             std.debug.print("Unknown JavaScript error occurred\n", .{});
         }
     } else {
-        // Convert JS value to int32
         var result: c_int = undefined;
         if (c.JS_ToInt32(ctx, &result, val) == 0) {
             std.debug.print("Result: {}\n", .{result});
