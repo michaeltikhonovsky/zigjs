@@ -4,27 +4,33 @@ pub fn build(b: *std.Build) void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
 
-    const lib = b.addStaticLibrary(.{
-        .name = "math",
-        .target = target,
-        .optimize = optimize,
-    });
-
-    lib.addCSourceFile(.{ .file = b.path("src/c/math.c") });
-    lib.root_module.addIncludePath(b.path("src/c"));
-    b.installArtifact(lib);
-
     const exe = b.addExecutable(.{
-        .name = "zig",
-        .root_source_file = b.path("src/main.zig"),
+        .name = "zig-quickjs-demo",
+        .root_source_file = .{ .src_path = .{
+            .owner = b,
+            .sub_path = "src/main.zig",
+        } },
         .target = target,
         .optimize = optimize,
     });
 
-    // exe.root_module.addIncludePath(b.path("src"));
-    // b.installArtifact(exe);
+    exe.addIncludePath(.{ .src_path = .{
+        .owner = b,
+        .sub_path = "quickjs",
+    } });
+    exe.addLibraryPath(.{ .src_path = .{
+        .owner = b,
+        .sub_path = "quickjs",
+    } });
+    exe.linkSystemLibrary("quickjs");
+    exe.linkLibC();
 
-    exe.linkLibrary(lib);
+    exe.addLibraryPath(.{ .src_path = .{
+        .owner = b,
+        .sub_path = "quickjs-libc.c",
+    } });
+
+    b.installArtifact(exe);
 
     const run_cmd = b.addRunArtifact(exe);
     run_cmd.step.dependOn(b.getInstallStep());
