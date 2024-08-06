@@ -5,7 +5,7 @@ pub fn build(b: *std.Build) void {
     const optimize = b.standardOptimizeOption(.{});
 
     const exe = b.addExecutable(.{
-        .name = "zig-quickjs-demo",
+        .name = "zigjs",
         .root_source_file = .{ .src_path = .{
             .owner = b,
             .sub_path = "src/main.zig",
