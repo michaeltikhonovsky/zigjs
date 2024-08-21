@@ -10,18 +10,19 @@ ZigJS is a Zig-based wrapper for QuickJS, enabling JavaScript execution within Z
 ## Example
 
 This project demonstrates execution of JavaScript code, including features such as:
-Object-oriented programming in JavaScript
-Function definitions and method calls
-Array and object manipulation
-Conditional logic
-String interpolation
-Console output
+
+- Object-oriented programming in JavaScript
+- Function definitions and method calls
+- Array and object manipulation
+- Conditional logic
+- String interpolation
+- Console output
 
 ## Getting Started
 
-Ensure that you have Zig installed on your system.
-Run `zig build run` from the root directory to run it.
-Feel free to play around with this code.
+1. Ensure that you have Zig installed on your system.
+2. Run `zig build run` from the root directory to run it.
+3. Feel free to play around with this code.
 
 ## Dependencies
 
