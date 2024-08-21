@@ -20,14 +20,51 @@ pub fn main() !void {
     c.js_std_init_handlers(rt);
     c.js_std_add_helpers(ctx, 0, null);
 
-    // const js_code = "console.log('Hello from JavaScript!'); 2 + 2;";
     const js_code =
-        \\function fibonacci(n) {
-        \\  if (n<=1) return n; 
-        \\  return fibonacci(n-1) + fibonacci(n-2);
-        \\} 
-        \\console.log('Fibonacci of 10:', fibonacci(10)); 
-        \\fibonacci(10);
+        \\const game = {
+        \\  currentRoom: 'start',
+        \\  inventory: [],
+        \\  rooms: {
+        \\    start: { description: 'You are in a dark room. There is a door to the north.', exits: { north: 'corridor' } },
+        \\    corridor: { description: 'You are in a long corridor. There is a door to the south and a door to the east.', exits: { south: 'start', east: 'treasure' } },
+        \\    treasure: { description: 'You found the treasure room! There is a golden key here.', exits: { west: 'corridor' }, items: ['golden key'] }
+        \\  },
+        \\  move: function(direction) {
+        \\    const nextRoom = this.rooms[this.currentRoom].exits[direction];
+        \\    if (nextRoom) {
+        \\      this.currentRoom = nextRoom;
+        \\      this.look();
+        \\    } else {
+        \\      console.log("You can't go that way.");
+        \\    }
+        \\  },
+        \\  look: function() {
+        \\    console.log(this.rooms[this.currentRoom].description);
+        \\    const items = this.rooms[this.currentRoom].items;
+        \\    if (items && items.length > 0) {
+        \\      console.log(`You see: ${items.join(', ')}`);
+        \\    }
+        \\  },
+        \\  take: function(item) {
+        \\    const roomItems = this.rooms[this.currentRoom].items;
+        \\    if (roomItems && roomItems.includes(item)) {
+        \\      this.inventory.push(item);
+        \\      this.rooms[this.currentRoom].items = roomItems.filter(i => i !== item);
+        \\      console.log(`You picked up the ${item}.`);
+        \\    } else {
+        \\      console.log("You don't see that item here.");
+        \\    }
+        \\  }
+        \\};
+        \\
+        \\console.log("Welcome to the Text Adventure!");
+        \\game.look();
+        \\game.move('north');
+        \\game.move('east');
+        \\game.take('golden key');
+        \\console.log(`Inventory: ${game.inventory.join(', ')}`);
+        \\
+        \\game.inventory.length; // Return the number of items in inventory
     ;
 
     const val = c.JS_Eval(ctx, js_code, js_code.len, "example.js", c.JS_EVAL_TYPE_GLOBAL);
@@ -46,7 +83,7 @@ pub fn main() !void {
     } else {
         var result: c_int = undefined;
         if (c.JS_ToInt32(ctx, &result, val) == 0) {
-            std.debug.print("Result: {}\n", .{result});
+            std.debug.print("Number of items in inventory: {}\n", .{result});
         } else {
             std.debug.print("Failed to convert result to int32\n", .{});
         }

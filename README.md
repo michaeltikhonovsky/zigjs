@@ -9,25 +9,13 @@ ZigJS is a Zig-based wrapper for QuickJS, enabling JavaScript execution within Z
 
 ## Example
 
-This project demonstrates how to execute JavaScript code, including more complex funcitons like Fibonacci:
-
-```zig
-const js_code =
-    \\function fibonacci(n) {
-    \\  if (n<=1) return n;
-    \\  return fibonacci(n-1) + fibonacci(n-2);
-    \\}
-    \\console.log('Fibonacci of 10:', fibonacci(10));
-    \\fibonacci(10);
-;
-```
-
-When you run the program, it will output:
-
-```
-Fibonacci of 10: 55
-Result: 55
-```
+This project demonstrates execution of JavaScript code, including features such as:
+Object-oriented programming in JavaScript
+Function definitions and method calls
+Array and object manipulation
+Conditional logic
+String interpolation
+Console output
 
 ## Getting Started
 
