@@ -20,7 +20,15 @@ pub fn main() !void {
     c.js_std_init_handlers(rt);
     c.js_std_add_helpers(ctx, 0, null);
 
-    const js_code = "console.log('Hello from JavaScript!'); 2 + 2;";
+    // const js_code = "console.log('Hello from JavaScript!'); 2 + 2;";
+    const js_code =
+        \\function fibonacci(n) {
+        \\  if (n<=1) return n; 
+        \\  return fibonacci(n-1) + fibonacci(n-2);
+        \\} 
+        \\console.log('Fibonacci of 10:', fibonacci(10)); 
+        \\fibonacci(10);
+    ;
 
     const val = c.JS_Eval(ctx, js_code, js_code.len, "example.js", c.JS_EVAL_TYPE_GLOBAL);
 
